@@ -1,5 +1,5 @@
 const config = {
-  backendUrl: "http://localhost:5000" // Replace with your backend URL if deployed
+  backendUrl: "https://backend-39jc.onrender.com" // Updated to deployed backend URL
 };
 
 export default config;
