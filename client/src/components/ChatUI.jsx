@@ -25,6 +25,11 @@ export default function ChatUI() {
     }
   }, [messages]);
 
+  useEffect(() => {
+    console.log(`Worker Agents: ${workerAgents}, Decision Loops: ${decisionLoops}`);
+    // Add any additional logic here if needed
+  }, [workerAgents, decisionLoops]);
+
   const sendMessage = async () => {
     if (!apiKey.trim()) {
       setError('Please enter your Gemini API Key.');
