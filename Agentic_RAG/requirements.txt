@@ -1,8 +1,0 @@
-flask
-flask-cors
-google-generativeai
-numpy
-stable-baselines3
-google-genai
-transformers
-torch
