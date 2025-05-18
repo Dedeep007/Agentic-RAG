@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import config from '../config';
 
 export default function ChatUI() {
   const [apiKey, setApiKey] = useState('');
@@ -34,7 +35,7 @@ export default function ChatUI() {
     setError('');
     setMessages([...messages, { role: 'user', text: prompt }]);
     try {
-      const res = await axios.post('http://localhost:5000/api/chat', {
+      const res = await axios.post(`${config.backendUrl}/api/chat`, {
         api_key: apiKey,
         prompt,
         worker_agents: workerAgents,
