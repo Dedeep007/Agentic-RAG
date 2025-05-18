@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS # type: ignore
+from flask_cors import CORS  # type: ignore
 from LLM_RAG import LLM_RAG
 
 app = Flask(__name__)
