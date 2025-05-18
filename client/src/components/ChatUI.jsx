@@ -55,7 +55,7 @@ export default function ChatUI() {
         }
       ]);
     } catch (err) {
-      setError('Error contacting backend.');
+      setError('Too many workers, api tokens exhausted');
     } finally {
       setPrompt('');
       setLoading(false);
