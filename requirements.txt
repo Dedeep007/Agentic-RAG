@@ -1,5 +1,5 @@
 flask
 flask-cors
 google-generativeai
-stable-baselines3
 google-genai
+stable-baselines3
