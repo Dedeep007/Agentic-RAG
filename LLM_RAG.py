@@ -1,6 +1,5 @@
 import os
 import google.generativeai as genai
-from retrieval_agent import RETAI
 from master_agent import MASTERAI
 
 class LLM_RAG:
@@ -48,15 +47,25 @@ Maintain a concise, professional, and helpful tone at all times.
         self.chat_session = self.model.start_chat(history=[])
         self.max_history = max_history
         self.chat_history = []
+        self.mast = MASTERAI(api_key, worker_agents, max_loops)
 
     def clear_history(self):
         self.chat_history.clear()
 
     def generate(self, prompt: str) -> dict:
+        # Step 1: Get wrapped context+summary from MASTERAI
+        mast_response = self.mast.generate(prompt)
+        # Step 2: Combine system instruction and summary into one user message
+        system_text = (
+            self.model.generation_config["system_instruction"] +
+            f"\nSUMMARY_START\n{mast_response}\nSUMMARY_END"
+        )
+        # Add the mast response to the chat session
+        self.chat_session.add_message(role="system", content=system_text)
         self.chat_session.add_message(role="user", content=prompt)
         response = self.chat_session.generate_response()
         self.chat_history.append({"role": "user", "content": prompt})
         self.chat_history.append({"role": "assistant", "content": response})
         if len(self.chat_history) > 2 * self.max_history:
             self.chat_history = self.chat_history[-2 * self.max_history:]
-        return {"response": response}
+        return {"mast_response": mast_response, "response": response, "rag_prompt": mast_response}
