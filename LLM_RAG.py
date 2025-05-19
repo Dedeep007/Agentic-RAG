@@ -94,8 +94,9 @@ Maintain a concise, professional, and helpful tone at all times.
             response_chunks.append(chunk.text)
         llm_response = "".join(response_chunks)
         # Step 5: Update chat history
-        self.chat_history.append({"role": "user", "content": mast_response})
+        self.chat_history.append({"role": "system", "content": mast_response})
+        self.chat_history.append({"role": "user", "content": prompt})
         self.chat_history.append({"role": "assistant", "content": llm_response})
         if len(self.chat_history) > 2 * self.max_history:
-            self.chat_history = self.chat_history[-2 * self.max_history :]
+            self.chat_history = self.chat_history[-2 * self.max_history:]
         return {"mast_response": mast_response, "llm_response": llm_response, "rag_prompt": mast_response}
